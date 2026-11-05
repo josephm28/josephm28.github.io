@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Solving sudoku from scratch — Joseph Malone</title>
-<meta name="description" content="A 2019 challenge: write a sudoku solver from first principles, then point it at the &quot;world's hardest&quot; sudoku.">
+<meta name="description" content="Writing a sudoku solver from first principles, then pointing it at the &quot;world's hardest&quot; sudoku.">
 <link rel="canonical" href="https://josephmalone.com/lab/sudoku/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Solving sudoku from scratch">
-<meta property="og:description" content="A 2019 challenge: write a sudoku solver from first principles, then point it at the &quot;world's hardest&quot; sudoku.">
+<meta property="og:description" content="Writing a sudoku solver from first principles, then pointing it at the &quot;world's hardest&quot; sudoku.">
 <meta property="og:url" content="https://josephmalone.com/lab/sudoku/">
 <meta property="og:image" content="https://josephmalone.com/me.jpg">
 <meta name="twitter:card" content="summary">
@@ -29,15 +29,15 @@
 <header class="wrap">
   <span class="tag">Experiment</span>
   <h1>Solving sudoku from scratch</h1>
-  <p class="dek">A 2019 challenge: write a sudoku solver from first principles, then point it at the "world's hardest" sudoku.</p>
-  <p class="meta">Built August 2019 · JavaScript · Node.js</p>
+  <p class="dek">Writing a sudoku solver from first principles, then pointing it at the "world's hardest" sudoku.</p>
+  <p class="meta">JavaScript · Node.js</p>
   <a class="btn" href="https://github.com/josephm28/sudoku" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.38c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5z"/></svg>View the code on GitHub</a>
 </header>
 
 <article class="wrap">
   <h2>The rule</h2>
   <p>Sudoku solvers are a classic programming exercise, and the well-known approaches are one search away. That was the problem. I wanted to see what I'd come up with on my own, so the repo's README states the rule up front: <em>"Trying to build this without consulting other algorithms."</em></p>
-  <p>The commit history tells the rest. The first real commit is <code>solving code as written in one file</code>. I wrote the whole solver first, then pushed it on August 23, 2019, and spent the next 20 minutes or so tidying: moving the sample puzzles into a folder, splitting out helper functions, adding a license and a run script. Seven commits, about 160 lines of JavaScript.</p>
+  <p>The commit history tells the rest. The first real commit is <code>solving code as written in one file</code>. I wrote the whole solver first, then pushed it and spent the next 20 minutes or so tidying: moving the sample puzzles into a folder, splitting out helper functions, adding a license and a run script. Seven commits, about 160 lines of JavaScript.</p>
 
   <h2>How it works</h2>
   <p>It's the way a person solves sudoku with a pencil, made relentless. Look at an empty cell and ask which numbers could possibly go there.</p>
@@ -99,8 +99,8 @@
       <tr><td><code>extreme</code></td><td>58</td><td>606</td><td>238</td><td>120</td><td>~22 ms</td><td class="bad">No solution</td></tr>
     </tbody>
   </table></div>
-  <p><code>everest</code> is Arto Inkala's puzzle, published in 2012 as the "world's hardest sudoku." My solver needs nearly a thousand dead ends to get through it, and it still finishes in a fraction of a second.</p>
-  <p>Then there's <code>extreme</code>, which the solver says can't be solved. I assumed that was a bug in the solver. It isn't. Row 7 of the puzzle file reads <code>0 0 0 7 0 7 0 0 0</code>: two 7s in one row. I made a typo copying it in back in 2019, and the solver correctly reported that no solution exists.</p>
+  <p><code>everest</code> is Arto Inkala's puzzle, billed as the "world's hardest sudoku." My solver needs nearly a thousand dead ends to get through it, and it still finishes in a fraction of a second.</p>
+  <p>Then there's <code>extreme</code>, which the solver says can't be solved. I assumed that was a bug in the solver. It isn't. Row 7 of the puzzle file reads <code>0 0 0 7 0 7 0 0 0</code>: two 7s in one row. I made a typo copying it in, and the solver correctly reported that no solution exists.</p>
 
   <h2>Looking back</h2>
   <p>Without knowing it, I'd landed on the standard approach: rule out candidates using what's already on the board, and when that stalls, guess and backtrack. That's the same general shape as most textbook solvers. If I picked it back up, I'd:</p>
@@ -110,7 +110,7 @@
     <li><strong>Return the answer.</strong> The solver prints the finished board but only returns true or false, so nothing else can use the solution.</li>
     <li><strong>Check the puzzle first.</strong> A two-line check for duplicate givens would have caught the typo before any solving started.</li>
   </ul>
-  <p>The code is still exactly as I left it in 2019: <a href="https://github.com/josephm28/sudoku" target="_blank" rel="noopener">github.com/josephm28/sudoku</a>.</p>
+  <p>The code is still exactly as I left it: <a href="https://github.com/josephm28/sudoku" target="_blank" rel="noopener">github.com/josephm28/sudoku</a>.</p>
 </article>
 
 <footer class="wrap">
