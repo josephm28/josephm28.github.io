@@ -101,15 +101,6 @@
   <p><code>everest</code> is Arto Inkala's puzzle, billed as the "world's hardest sudoku." My solver needs nearly a thousand dead ends to get through it, and it still finishes in a fraction of a second.</p>
   <p>Then there's <code>extreme</code>, which the solver says can't be solved. I assumed that was a bug in the solver. It isn't. Row 7 of the puzzle file reads <code>0 0 0 7 0 7 0 0 0</code>: two 7s in one row. I made a typo copying it in, and the solver correctly reported that no solution exists.</p>
 
-  <h2>Looking back</h2>
-  <p>Without knowing it, I'd landed on the standard approach: rule out candidates using what's already on the board, and when that stalls, guess and backtrack. That's the same general shape as most textbook solvers. If I picked it back up, I'd:</p>
-  <ul>
-    <li><strong>Guess where it's cheapest.</strong> It guesses at the first cell with two options. Choosing the cell with the fewest options would prune the search faster, and it would handle a board where no cell has exactly two.</li>
-    <li><strong>Keep candidates around.</strong> Every sweep recomputes each cell's options from scratch. Updating them only when a neighbor changes would cut most of the work.</li>
-    <li><strong>Return the answer.</strong> The solver prints the finished board but only returns true or false, so nothing else can use the solution.</li>
-    <li><strong>Check the puzzle first.</strong> A two-line check for duplicate givens would have caught the typo before any solving started.</li>
-  </ul>
-  <p>The code is still exactly as I left it: <a href="https://github.com/josephm28/sudoku" target="_blank" rel="noopener">github.com/josephm28/sudoku</a>.</p>
 </article>
 
 <footer class="wrap">
