@@ -13,7 +13,9 @@
 <meta property="og:image" content="https://josephmalone.com/me.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0f3d6e">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f3d6e'/><text x='32' y='42' font-family='Georgia,serif' font-size='28' fill='white' text-anchor='middle'>JM</text></svg>">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f3d6e'/><text x='32' y='42' font-family='Georgia,serif' font-size='28' fill='white' text-anchor='middle'>JM</text></svg>">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Joseph Malone","jobTitle":"Software Engineering Manager","worksFor":{"@type":"Organization","name":"DroneDeploy"},"address":{"@type":"PostalAddress","addressLocality":"Dallas–Fort Worth","addressRegion":"TX"},"url":"https://josephmalone.com/","email":"mailto:joseph@josephmalone.com","alumniOf":"University of Dallas","sameAs":["https://www.linkedin.com/in/josephm28","https://github.com/josephm28"]}
 </script>
@@ -131,10 +133,10 @@ footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line
 
 <main class="wrap">
   <nav class="tabs" role="tablist" aria-label="Sections">
-    <a href="#work" role="tab" id="tab-work" aria-controls="work" aria-selected="true">Work</a>
-    <a href="#started" role="tab" id="tab-started" aria-controls="started" aria-selected="false">How I got started</a>
+    <a href="#work" role="tab" id="tab-work" aria-controls="panel-work" aria-selected="true">Work</a>
+    <a href="#started" role="tab" id="tab-started" aria-controls="panel-started" aria-selected="false">How I got started</a>
   </nav>
-  <div id="work" class="panel" role="tabpanel" aria-labelledby="tab-work">
+  <div id="panel-work" class="panel" role="tabpanel" aria-labelledby="tab-work">
   <section class="about" aria-labelledby="about">
     <h2 id="about">About</h2>
     <p>I'm a full-stack software engineer turned manager, and I love blending creativity and technology to build engaging, interactive applications. Today I manage DroneDeploy's combined Dock Drones and Flight software team — doing all things flight.</p>
@@ -239,8 +241,16 @@ footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line
     </article>
   </section>
 
+  <section aria-labelledby="education">
+    <h2 id="education">Education &amp; certifications</h2>
+    <div class="cols">
+      <div><h3>Education</h3><p><b>B.A., Computer Science</b><br>University of Dallas, 2012 – 2016</p></div>
+      <div><h3>Certifications</h3><p><b>FAA Part 107 Remote Pilot</b></p></div>
+    </div>
+  </section>
+
   </div>
-  <div id="started" class="panel" role="tabpanel" aria-labelledby="tab-started">
+  <div id="panel-started" class="panel" role="tabpanel" aria-labelledby="tab-started">
   <section aria-labelledby="earlier">
     <h2 id="earlier">Earlier</h2>
     <ul class="earlier">
@@ -252,11 +262,9 @@ footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line
   </section>
 
   <section aria-labelledby="more">
-    <h2 id="more">Education &amp; more</h2>
+    <h2 id="more">More about me</h2>
     <div class="cols">
-      <div><h3>Education</h3><p><b>University of Dallas</b>, 2012 – 2016<br>Bachelor's, Computer Science | Classics</p></div>
       <div><h3>Top skills</h3><p>Technical problem-solving and obstacle removal · Solution architecture · Solution delivery</p></div>
-      <div><h3>Certifications</h3><p>FAA Part 107 Remote Pilot<br>Learning Python</p></div>
       <div><h3>Languages</h3><p>English (native) · Latin, Ancient Greek (limited working)</p></div>
       <div><h3>Honors</h3><ul><li>ACM International Collegiate Programming Contest (3×)</li><li>3rd Award, International Science and Engineering Fair — Computer Science</li><li>1st Place, New Mexico State Science Fair — Math</li></ul></div>
     </div>
@@ -272,12 +280,36 @@ footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line
 document.documentElement.classList.add('js');
 (function(){
   var tabs=[].slice.call(document.querySelectorAll('.tabs a'));
+  // Panels use id="panel-<name>" so a #<name> URL never matches an element and the browser doesn't jump.
+  function valid(id){var el=id&&document.getElementById('panel-'+id);return el&&el.classList.contains('panel')?'panel-'+id:'panel-work';}
   function show(id){
-    if(!document.getElementById(id)||!document.getElementById(id).classList.contains('panel'))id='work';
-    tabs.forEach(function(t){var on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+    id=valid(id);
+    tabs.forEach(function(t){
+      var on=t.getAttribute('aria-controls')===id;
+      t.setAttribute('aria-selected',on);
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(ev){ev.preventDefault();var id=t.getAttribute('aria-controls');show(id);try{history.replaceState(null,'','#'+id)}catch(e){}});});
-  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+  function select(t,focus){
+    var id=t.getAttribute('aria-controls');
+    show(id.replace('panel-',''));
+    if(focus)t.focus();
+    try{history.replaceState(null,'','#'+id.replace('panel-',''))}catch(e){}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(ev){ev.preventDefault();select(t);});
+    t.addEventListener('keydown',function(ev){
+      var n=tabs.length,j=null;
+      if(ev.key==='ArrowRight')j=(i+1)%n;
+      else if(ev.key==='ArrowLeft')j=(i-1+n)%n;
+      else if(ev.key==='Home')j=0;
+      else if(ev.key==='End')j=n-1;
+      else if(ev.key===' '){ev.preventDefault();select(t);return;}
+      if(j!==null){ev.preventDefault();select(tabs[j],true);}
+    });
+  });
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1));});
   show(location.hash.slice(1));
 })();
 </script>
