@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A kid-size 737-100 — Joseph Malone</title>
+<meta name="description" content="Designing a rolling, ride-on 737-100 for kids in a conversation with Claude, from first prompt to 9-sheet plans to the finished plane.">
+<link rel="canonical" href="https://josephmalone.com/lab/737-kid-plane/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A kid-size 737-100">
+<meta property="og:description" content="Designing a rolling, ride-on 737-100 for kids in a conversation with Claude, from first prompt to 9-sheet plans to the finished plane.">
+<meta property="og:url" content="https://josephmalone.com/lab/737-kid-plane/">
+<meta property="og:image" content="https://josephmalone.com/lab/737-kid-plane/plane-lot.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0f3d6e">
+<script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script src="/theme.js" defer></script>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lab/lab.css">
+</head>
+<body>
+
+<nav class="wrap top"><span><a href="/">Joseph Malone</a> / <a href="/#lab">Lab</a></span><div data-theme-switch></div></nav>
+
+<header class="wrap">
+  <span class="tag">Build</span>
+  <h1>A kid-size 737-100</h1>
+  <p class="dek">A ride-on 737 with a working yoke, a printed cockpit and furniture dollies for landing gear, designed over a few weeks in a conversation with Claude.</p>
+  <p class="meta">October 2026 · 98 in long · 71 in wingspan</p>
+  <div class="btn-row">
+    <a class="btn" href="/lab/737-kid-plane/737-100-kid-plane-8ft.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Plans (PDF, 9 sheets)</a>
+    <a class="btn ghost" href="/lab/737-kid-plane/737-captain-panel.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Cockpit panel (PDF)</a>
+  </div>
+</header>
+
+<article class="wrap">
+  <figure class="photo">
+    <img src="/lab/737-kid-plane/plane-lot.jpg" alt="The finished kid-size 737 on a parking lot: blue fuselage, a red, orange and yellow tail, grey wings and engines, an open cabin and a black tow handle at the nose" width="480" height="360">
+    <figcaption>The finished plane, with a tow handle at the nose.</figcaption>
+  </figure>
+
+  <h2>One prompt at a time</h2>
+  <p>It started with a single line on October 10: <em>"Scale a 737 so the cabin is 18" wide."</em> The answer was a 737-800 almost 17 feet long, which wasn't going to fit anywhere. So I kept asking: what's the shortest 737, what if the cabin is 14", can the wings be shorter? Each answer narrowed it down.</p>
+
+  <figure class="fig">
+    <div class="bars"><div class="bar-row"><span class="bar-label">737-800, cabin 18" wide<small>first try</small></span><span class="bar-track"><span class="bar" style="width:100.0%"></span><span class="bar-val">16′9″</span></span></div><div class="bar-row"><span class="bar-label">737-100, cabin 18" wide<small>shortest 737</small></span><span class="bar-track"><span class="bar" style="width:72.6%"></span><span class="bar-val">12′2″</span></span></div><div class="bar-row"><span class="bar-label">737-100, cabin 14" wide<small>first PDF</small></span><span class="bar-track"><span class="bar" style="width:56.7%"></span><span class="bar-val">9′6″</span></span></div><div class="bar-row"><span class="bar-label">6 ft version<small>too small to sit in</small></span><span class="bar-track"><span class="bar" style="width:35.8%"></span><span class="bar-val">6′</span></span></div><div class="bar-row final"><span class="bar-label">8 ft version<small>the one that got built</small></span><span class="bar-track"><span class="bar" style="width:48.8%"></span><span class="bar-val">8′2″</span></span></div></div>
+    <figcaption>Overall length of each version, in order. The last one fits the kids, a 12" cabin and a 6 ft wingspan.</figcaption>
+  </figure>
+
+  <p>The real requirements came out along the way:</p>
+  <ul>
+    <li><strong>Room for the kids</strong> sitting sled-style, each between the knees of the one behind. That set the 58"-long opening and a 12" minimum cabin width.</li>
+    <li><strong>No more than 6 ft tip to tip.</strong> At true scale the wings would be 97", so they're built at 73% scale while the fuselage stays almost exactly true to the real plane, at about 1:11.5.</li>
+    <li><strong>An open top.</strong> A seated child is taller than a scale fuselage, so the roof comes off over the cabin.</li>
+    <li><strong>Two small furniture dollies</strong> instead of landing gear, bolted to a plywood floor.</li>
+  </ul>
+
+  <h2>Getting the proportions right</h2>
+  <p>Once there was a PDF, the work shifted to making it look like a 737 and not just a box with wings. I asked for a dimension on every edge so the parts would cut in proportion, then started questioning the shape:</p>
+  <ul>
+    <li><strong>The nose was too blunt.</strong> It became a carved foam cone with the tip 5" up and a rounded chin, traced from a grid on the plans.</li>
+    <li><strong>The fin was too narrow and too upright.</strong> It was checked against Boeing's airport planning data for the 737-100 and redrawn with a longer root and more sweep. The horizontal tail grew to match.</li>
+    <li><strong>The engines were too long</strong> once the wings were scaled down. They went from 18" to 14", still 4" across so they look right next to the fuselage.</li>
+    <li><strong>A yoke for the front seat.</strong> A 6"-wide, ram's-horn yoke on a sliding dowel, with stop collars so it never gets close enough to pinch fingers.</li>
+  </ul>
+
+  <figure class="fig sheet">
+    <img src="/lab/737-kid-plane/sheet-1.png" alt="Sheet 1 of the plans: top view of the kid-size 737 with every dimension in inches" width="1200" height="927" loading="lazy">
+    <figcaption>Sheet 1, the top view. The plans also have the side view, cut patterns for the center box, nose cone, tail cone, wings, fin, engines and yoke, and a cut list.</figcaption>
+  </figure>
+  <figure class="fig sheet">
+    <img src="/lab/737-kid-plane/sheet-2.png" alt="Sheet 2 of the plans: side view showing heights from the ground, the dollies and stations along the fuselage" width="1200" height="927" loading="lazy">
+    <figcaption>Sheet 2, the side view, with every station measured from the nose.</figcaption>
+  </figure>
+
+  <h2>The cockpit</h2>
+  <p>The last piece came from a separate conversation: a full-page, captain's-side 737 panel to print for the cockpit, with the autopilot panel, flight displays, engine gauges and gear lever. "No yoke," because the plane already has one.</p>
+  <figure class="fig sheet">
+    <img src="/lab/737-kid-plane/cockpit-panel.jpg" alt="Printable 737-style captain's instrument panel with autopilot controls, flight displays, engine gauges, flaps and landing gear lever" width="1400" height="1081" loading="lazy">
+    <figcaption>The printable cockpit panel, sized for one Letter landscape page.</figcaption>
+  </figure>
+
+  <figure class="photo">
+    <img src="/lab/737-kid-plane/plane-studio.jpg" alt="The finished kid-size 737 seen from above and behind, with the open cabin, wings, engines and tow handle" width="580" height="326" loading="lazy">
+  </figure>
+
+  <h2>Build it yourself</h2>
+  <p>Everything is in inches, and every edge is dimensioned. The plans call for ½" plywood sides, ¾" plywood for the bulkheads, floor and yoke, and 2" XPS foam board for the carved nose and tail cones.</p>
+  <div class="btn-row">
+    <a class="btn" href="/lab/737-kid-plane/737-100-kid-plane-8ft.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Plans (PDF, 9 sheets)</a>
+    <a class="btn ghost" href="/lab/737-kid-plane/737-captain-panel.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Cockpit panel (PDF)</a>
+  </div>
+  <p class="fine">A homemade toy, not a certified product. Supervise kids, pad every edge, and lock the casters when it's parked.</p>
+</article>
+
+<footer class="wrap">
+  <a href="/#lab">← Back to Lab</a>
+  <span>© 2026 Joseph Malone</span>
+</footer>
+
+</body>
+</html>
