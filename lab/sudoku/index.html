@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solving sudoku without looking it up — Joseph Malone</title>
+<meta name="description" content="A 2019 challenge: write a sudoku solver from first principles, then point it at the &quot;world's hardest&quot; sudoku.">
+<link rel="canonical" href="https://josephmalone.com/lab/sudoku/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solving sudoku without looking it up">
+<meta property="og:description" content="A 2019 challenge: write a sudoku solver from first principles, then point it at the &quot;world's hardest&quot; sudoku.">
+<meta property="og:url" content="https://josephmalone.com/lab/sudoku/">
+<meta property="og:image" content="https://josephmalone.com/me.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0f3d6e">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lab/lab.css">
+</head>
+<body>
+
+<nav class="wrap top"><a href="/">Joseph Malone</a> / <a href="/#lab">Lab</a></nav>
+
+<header class="wrap">
+  <span class="tag">Experiment</span>
+  <h1>Solving sudoku without looking it up</h1>
+  <p class="dek">A 2019 challenge: write a sudoku solver from first principles, then point it at the "world's hardest" sudoku.</p>
+  <p class="meta">Built August 2019 · JavaScript · Node.js</p>
+  <a class="btn" href="https://github.com/josephm28/sudoku" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.38c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5z"/></svg>View the code on GitHub</a>
+</header>
+
+<article class="wrap">
+  <h2>The rule</h2>
+  <p>Sudoku solvers are a classic programming exercise, and the well-known approaches are one search away. That was the problem. I wanted to see what I'd come up with on my own, so the repo's README states the rule up front: <em>"Trying to build this without consulting other algorithms."</em></p>
+  <p>The commit history tells the rest. The first real commit is <code>solving code as written in one file</code>. I wrote the whole solver first, then pushed it on August 23, 2019, and spent the next 20 minutes or so tidying: moving the sample puzzles into a folder, splitting out helper functions, adding a license and a run script. Seven commits, about 160 lines of JavaScript.</p>
+
+  <h2>How it works</h2>
+  <p>It's the way a person solves sudoku with a pencil, made relentless. Look at an empty cell and ask which numbers could possibly go there.</p>
+  <figure class="fig">
+  <div class="fig1">
+    <svg class="sgrid" viewBox="0 0 278 278" role="img" aria-label="Easy puzzle with the empty cell in row 1, column 7 highlighted along with its row, column and 3 by 3 box"><rect class="cell hl-row" x="4" y="4" width="30" height="30"/><rect class="cell hl-row" x="34" y="4" width="30" height="30"/><rect class="cell hl-row" x="64" y="4" width="30" height="30"/><rect class="cell hl-row" x="94" y="4" width="30" height="30"/><rect class="cell hl-row" x="124" y="4" width="30" height="30"/><rect class="cell hl-row" x="154" y="4" width="30" height="30"/><rect class="cell target" x="184" y="4" width="30" height="30"/><rect class="cell hl-box hl-row" x="214" y="4" width="30" height="30"/><rect class="cell hl-box hl-row" x="244" y="4" width="30" height="30"/><rect class="cell" x="4" y="34" width="30" height="30"/><rect class="cell" x="34" y="34" width="30" height="30"/><rect class="cell" x="64" y="34" width="30" height="30"/><rect class="cell" x="94" y="34" width="30" height="30"/><rect class="cell" x="124" y="34" width="30" height="30"/><rect class="cell" x="154" y="34" width="30" height="30"/><rect class="cell hl-box hl-col" x="184" y="34" width="30" height="30"/><rect class="cell hl-box" x="214" y="34" width="30" height="30"/><rect class="cell hl-box" x="244" y="34" width="30" height="30"/><rect class="cell" x="4" y="64" width="30" height="30"/><rect class="cell" x="34" y="64" width="30" height="30"/><rect class="cell" x="64" y="64" width="30" height="30"/><rect class="cell" x="94" y="64" width="30" height="30"/><rect class="cell" x="124" y="64" width="30" height="30"/><rect class="cell" x="154" y="64" width="30" height="30"/><rect class="cell hl-box hl-col" x="184" y="64" width="30" height="30"/><rect class="cell hl-box" x="214" y="64" width="30" height="30"/><rect class="cell hl-box" x="244" y="64" width="30" height="30"/><rect class="cell" x="4" y="94" width="30" height="30"/><rect class="cell" x="34" y="94" width="30" height="30"/><rect class="cell" x="64" y="94" width="30" height="30"/><rect class="cell" x="94" y="94" width="30" height="30"/><rect class="cell" x="124" y="94" width="30" height="30"/><rect class="cell" x="154" y="94" width="30" height="30"/><rect class="cell hl-col" x="184" y="94" width="30" height="30"/><rect class="cell" x="214" y="94" width="30" height="30"/><rect class="cell" x="244" y="94" width="30" height="30"/><rect class="cell" x="4" y="124" width="30" height="30"/><rect class="cell" x="34" y="124" width="30" height="30"/><rect class="cell" x="64" y="124" width="30" height="30"/><rect class="cell" x="94" y="124" width="30" height="30"/><rect class="cell" x="124" y="124" width="30" height="30"/><rect class="cell" x="154" y="124" width="30" height="30"/><rect class="cell hl-col" x="184" y="124" width="30" height="30"/><rect class="cell" x="214" y="124" width="30" height="30"/><rect class="cell" x="244" y="124" width="30" height="30"/><rect class="cell" x="4" y="154" width="30" height="30"/><rect class="cell" x="34" y="154" width="30" height="30"/><rect class="cell" x="64" y="154" width="30" height="30"/><rect class="cell" x="94" y="154" width="30" height="30"/><rect class="cell" x="124" y="154" width="30" height="30"/><rect class="cell" x="154" y="154" width="30" height="30"/><rect class="cell hl-col" x="184" y="154" width="30" height="30"/><rect class="cell" x="214" y="154" width="30" height="30"/><rect class="cell" x="244" y="154" width="30" height="30"/><rect class="cell" x="4" y="184" width="30" height="30"/><rect class="cell" x="34" y="184" width="30" height="30"/><rect class="cell" x="64" y="184" width="30" height="30"/><rect class="cell" x="94" y="184" width="30" height="30"/><rect class="cell" x="124" y="184" width="30" height="30"/><rect class="cell" x="154" y="184" width="30" height="30"/><rect class="cell hl-col" x="184" y="184" width="30" height="30"/><rect class="cell" x="214" y="184" width="30" height="30"/><rect class="cell" x="244" y="184" width="30" height="30"/><rect class="cell" x="4" y="214" width="30" height="30"/><rect class="cell" x="34" y="214" width="30" height="30"/><rect class="cell" x="64" y="214" width="30" height="30"/><rect class="cell" x="94" y="214" width="30" height="30"/><rect class="cell" x="124" y="214" width="30" height="30"/><rect class="cell" x="154" y="214" width="30" height="30"/><rect class="cell hl-col" x="184" y="214" width="30" height="30"/><rect class="cell" x="214" y="214" width="30" height="30"/><rect class="cell" x="244" y="214" width="30" height="30"/><rect class="cell" x="4" y="244" width="30" height="30"/><rect class="cell" x="34" y="244" width="30" height="30"/><rect class="cell" x="64" y="244" width="30" height="30"/><rect class="cell" x="94" y="244" width="30" height="30"/><rect class="cell" x="124" y="244" width="30" height="30"/><rect class="cell" x="154" y="244" width="30" height="30"/><rect class="cell hl-col" x="184" y="244" width="30" height="30"/><rect class="cell" x="214" y="244" width="30" height="30"/><rect class="cell" x="244" y="244" width="30" height="30"/><text class="d" x="19.0" y="24.0">5</text><text class="d" x="109.0" y="24.0">2</text><text class="d" x="169.0" y="24.0">9</text><text class="q" x="199.0" y="24.0">?</text><text class="d" x="229.0" y="24.0">6</text><text class="d" x="49.0" y="54.0">6</text><text class="d" x="79.0" y="54.0">2</text><text class="d" x="109.0" y="54.0">7</text><text class="d" x="139.0" y="54.0">3</text><text class="d" x="229.0" y="54.0">9</text><text class="d" x="259.0" y="54.0">8</text><text class="d" x="19.0" y="84.0">4</text><text class="d" x="79.0" y="84.0">9</text><text class="d" x="109.0" y="84.0">6</text><text class="d" x="199.0" y="84.0">1</text><text class="d" x="229.0" y="84.0">3</text><text class="d" x="259.0" y="84.0">2</text><text class="d" x="19.0" y="114.0">9</text><text class="d" x="199.0" y="114.0">4</text><text class="d" x="259.0" y="114.0">7</text><text class="d" x="49.0" y="144.0">8</text><text class="d" x="79.0" y="144.0">7</text><text class="d" x="109.0" y="144.0">3</text><text class="d" x="139.0" y="144.0">4</text><text class="d" x="229.0" y="144.0">1</text><text class="d" x="19.0" y="174.0">2</text><text class="d" x="109.0" y="174.0">1</text><text class="d" x="259.0" y="174.0">3</text><text class="d" x="19.0" y="204.0">3</text><text class="d" x="49.0" y="204.0">4</text><text class="d" x="139.0" y="204.0">2</text><text class="d" x="169.0" y="204.0">6</text><text class="d" x="199.0" y="204.0">8</text><text class="d" x="79.0" y="234.0">6</text><text class="d" x="139.0" y="234.0">5</text><text class="d" x="169.0" y="234.0">1</text><text class="d" x="79.0" y="264.0">1</text><text class="d" x="199.0" y="264.0">2</text><text class="d" x="259.0" y="264.0">6</text><line class="thick" x1="4" y1="4" x2="274" y2="4"/><line class="thick" x1="4" y1="4" x2="4" y2="274"/><line class="thick" x1="4" y1="94" x2="274" y2="94"/><line class="thick" x1="94" y1="4" x2="94" y2="274"/><line class="thick" x1="4" y1="184" x2="274" y2="184"/><line class="thick" x1="184" y1="4" x2="184" y2="274"/><line class="thick" x1="4" y1="274" x2="274" y2="274"/><line class="thick" x1="274" y1="4" x2="274" y2="274"/></svg>
+    <div class="sets"><div class="set row"><span class="lbl">Row is missing</span><span class="chips"><span class="chip">1</span><span class="chip">3</span><span class="chip">4</span><span class="chip keep">7</span><span class="chip">8</span></span></div><div class="set col"><span class="lbl">Column is missing</span><span class="chips"><span class="chip">3</span><span class="chip">5</span><span class="chip">6</span><span class="chip keep">7</span><span class="chip">9</span></span></div><div class="set box"><span class="lbl">Box is missing</span><span class="chips"><span class="chip">4</span><span class="chip">5</span><span class="chip keep">7</span></span></div><div class="result">Only <span class="chip keep">7</span> is in all three, so the cell must be 7.</div></div>
+  </div>
+  <figcaption>Step 1: for an empty cell, take the numbers missing from its row, its column and its 3×3 box. Whatever is in all three lists is a candidate. One candidate means the cell is solved. This is the first cell the solver fills in <code>easy.js</code>.</figcaption>
+</figure>
+  <p>One cell rarely solves a puzzle, so the solver sweeps the whole board, fills every cell it can, and repeats. Each number it writes in narrows the options for its neighbors, so easy puzzles fall apart in a few sweeps.</p>
+  <figure class="fig">
+  <ol class="flow">
+    <li class="node"><span class="n">1</span><div><b>Any empty cells left?</b><span class="branch ok">No → solved ✓</span></div></li>
+    <li class="node"><span class="n">2</span><div><b>Sweep the board.</b> For every empty cell, work out its candidates. If there's exactly one, write it in right away, so later cells in the same sweep benefit.</div></li>
+    <li class="node"><span class="n">3</span><div><b>Did any cell end up with zero candidates?</b><span class="branch bad">Yes → dead end ✗, back up</span></div></li>
+    <li class="node"><span class="n">4</span><div><b>Did the sweep change the board?</b><span class="branch loop">Yes → go back to 1 ↺</span></div></li>
+    <li class="node stuck"><span class="n">5</span><div><b>Stuck. Take a snapshot and guess.</b> Find the first cell with exactly two candidates. Try the first one and start again from 1. If that leads to a dead end, restore the snapshot and try the second.<span class="branch bad">Both fail → dead end ✗, back up</span></div></li>
+  </ol>
+  <figcaption>Step 2: the whole solver is this loop. <code>solve()</code> is one sweep (steps 2–3), and <code>solvingTree()</code> decides what happens next (steps 1, 4 and 5).</figcaption>
+</figure>
+  <p>Harder puzzles get stuck: every empty cell has two or more candidates, and sweeping changes nothing. That's when it guesses. It snapshots the board, picks a cell with exactly two options, and tries one. If the guess is wrong, a later sweep finds a cell with no possible numbers, and the solver rolls back to the snapshot and tries the other option. Guesses can stack inside guesses, which makes it a depth-first search.</p>
+  <figure class="fig">
+  <svg class="tree" viewBox="0 0 420 240" role="img" aria-label="Search tree: when stuck, the solver guesses between two options; a wrong guess hits a dead end and it backs up to try the other option">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ahead"/></marker></defs>
+    <g class="edges">
+      <path d="M190 48 L95 102" marker-end="url(#ah)"/>
+      <path d="M230 48 L325 102" marker-end="url(#ah)"/>
+      <path d="M318 140 L262 194" marker-end="url(#ah)"/>
+      <path d="M352 140 L368 194" marker-end="url(#ah)"/>
+    </g>
+    <g class="lbls">
+      <text x="134" y="80" text-anchor="end">try 3</text>
+      <text x="286" y="80">try 8</text>
+      <text x="282" y="172" text-anchor="end">try 2</text>
+      <text x="366" y="172">try 6</text>
+    </g>
+    <g class="nodes">
+      <rect class="tn stuck" x="145" y="12" width="130" height="36" rx="9"/><text x="210" y="35">Stuck: {3, 8}</text>
+      <rect class="tn bad" x="20" y="104" width="130" height="36" rx="9"/><text x="85" y="127">Dead end ✗</text>
+      <rect class="tn stuck" x="270" y="104" width="130" height="36" rx="9"/><text x="335" y="127">Stuck: {2, 6}</text>
+      <rect class="tn bad" x="196" y="196" width="110" height="36" rx="9"/><text x="251" y="219">Dead end ✗</text>
+      <rect class="tn ok" x="316" y="196" width="100" height="36" rx="9"/><text x="366" y="219">Solved ✓</text>
+    </g>
+  </svg>
+  <figcaption>Step 3: guessing turns the loop into a search tree. Each guess is followed by more sweeps. A wrong guess eventually leaves some cell with no candidates, and the solver backs up to the last snapshot and takes the other branch. This example is illustrative; on the "world's hardest" puzzle it got stuck 928 times.</figcaption>
+</figure>
+
+  <h2>How it did</h2>
+  <p>The repo ships with six puzzles. I ran them again for this write-up, in a browser, with counters added to the original code:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Puzzle</th><th>Empty cells</th><th>Sweeps</th><th>Guesses</th><th>Dead ends</th><th>Time</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><code>easy</code></td><td>43</td><td>3</td><td>0</td><td>0</td><td>~1 ms</td><td class="ok">Solved</td></tr>
+      <tr><td><code>easy-two</code></td><td>43</td><td>3</td><td>0</td><td>0</td><td>&lt;1 ms</td><td class="ok">Solved</td></tr>
+      <tr><td><code>medium-one</code></td><td>51</td><td>8</td><td>1</td><td>0</td><td>&lt;1 ms</td><td class="ok">Solved</td></tr>
+      <tr><td><code>medium-two</code></td><td>56</td><td>69</td><td>29</td><td>14</td><td>~7 ms</td><td class="ok">Solved</td></tr>
+      <tr><td><code>everest</code></td><td>60</td><td>4,172</td><td>1,850</td><td>922</td><td>~60 ms</td><td class="ok">Solved</td></tr>
+      <tr><td><code>extreme</code></td><td>58</td><td>606</td><td>238</td><td>120</td><td>~22 ms</td><td class="bad">No solution</td></tr>
+    </tbody>
+  </table></div>
+  <p><code>everest</code> is Arto Inkala's puzzle, published in 2012 as the "world's hardest sudoku." My solver needs nearly a thousand dead ends to get through it, and it still finishes in a fraction of a second.</p>
+  <p>Then there's <code>extreme</code>, which the solver says can't be solved. I assumed that was a bug in the solver. It isn't. Row 7 of the puzzle file reads <code>0 0 0 7 0 7 0 0 0</code>: two 7s in one row. I made a typo copying it in back in 2019, and the solver correctly reported that no solution exists.</p>
+
+  <h2>Looking back</h2>
+  <p>Without knowing it, I'd landed on the standard approach: rule out candidates using what's already on the board, and when that stalls, guess and backtrack. That's the same general shape as most textbook solvers. If I picked it back up, I'd:</p>
+  <ul>
+    <li><strong>Guess where it's cheapest.</strong> It guesses at the first cell with two options. Choosing the cell with the fewest options would prune the search faster, and it would handle a board where no cell has exactly two.</li>
+    <li><strong>Keep candidates around.</strong> Every sweep recomputes each cell's options from scratch. Updating them only when a neighbor changes would cut most of the work.</li>
+    <li><strong>Return the answer.</strong> The solver prints the finished board but only returns true or false, so nothing else can use the solution.</li>
+    <li><strong>Check the puzzle first.</strong> A two-line check for duplicate givens would have caught the typo before any solving started.</li>
+  </ul>
+  <p>The code is still exactly as I left it in 2019: <a href="https://github.com/josephm28/sudoku" target="_blank" rel="noopener">github.com/josephm28/sudoku</a>.</p>
+</article>
+
+<footer class="wrap">
+  <a href="/#lab">← Back to Lab</a>
+  <span>© 2026 Joseph Malone</span>
+</footer>
+
+</body>
+</html>

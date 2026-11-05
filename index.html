@@ -95,6 +95,14 @@ h2{font-size:1.45rem;margin-bottom:18px}
 .tabs a:hover{text-decoration:none;color:var(--ink)}
 .tabs a[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
 .panel > section:first-child{border-top:none}
+.lab-intro{color:var(--muted);margin:-8px 0 18px}
+.lab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.tile{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--ink);transition:border-color .15s,transform .15s}
+.tile:hover{text-decoration:none;border-color:var(--accent);transform:translateY(-2px)}
+.tile .tag{align-self:flex-start;font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-bottom:10px}
+.tile h3{font-size:1.15rem;margin-bottom:6px}
+.tile p{color:var(--muted);font-size:.93rem;margin:0 0 12px;flex:1}
+.tile .more{color:var(--accent);font-size:.9rem;font-weight:500}
 .js .panel[hidden]{display:none}
 footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
 
@@ -137,6 +145,7 @@ footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line
 <main class="wrap">
   <nav class="tabs" role="tablist" aria-label="Sections">
     <a href="#work" role="tab" id="tab-work" aria-controls="panel-work" aria-selected="true">Work</a>
+    <a href="#lab" role="tab" id="tab-lab" aria-controls="panel-lab" aria-selected="false">Lab</a>
     <a href="#started" role="tab" id="tab-started" aria-controls="panel-started" aria-selected="false">How I got started</a>
   </nav>
   <div id="panel-work" class="panel" role="tabpanel" aria-labelledby="tab-work">
@@ -261,6 +270,20 @@ footer.wrap{padding-top:36px;padding-bottom:56px;border-top:1px solid var(--line
     </ul>
   </section>
 
+  </div>
+  <div id="panel-lab" class="panel" role="tabpanel" aria-labelledby="tab-lab">
+  <section aria-labelledby="lab-heading">
+    <h2 id="lab-heading">Lab</h2>
+    <p class="lab-intro">Experiments, demos, write-ups and ways I'm using AI, in various states of finished.</p>
+    <div class="lab-grid">
+      <a class="tile" href="/lab/sudoku/">
+        <span class="tag">Experiment</span>
+        <h3>Solving sudoku without looking it up</h3>
+        <p>A 2019 challenge: write a solver from first principles, then point it at the "world's hardest" sudoku.</p>
+        <span class="more">Read →</span>
+      </a>
+    </div>
+  </section>
   </div>
   <div id="panel-started" class="panel" role="tabpanel" aria-labelledby="tab-started">
   <section aria-labelledby="earlier">
