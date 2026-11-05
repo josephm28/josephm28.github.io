@@ -2,11 +2,11 @@
 :root{
   --bg:#f7f6f2; --surface:#ffffff; --ink:#1b1f24; --muted:#5b6470; --line:#e3e1da;
   --accent:#0f3d6e; --accent-ink:#ffffff; --accent-soft:#e6eef7; --code-bg:#efede6;
+  --ok-bg:#e3f4e8; --ok-ink:#1d6b38; --ok-line:#8fcca3; --bad-bg:#fbe9e7; --bad-ink:#a3362b; --bad-line:#e3a59d;
 }
-@media (prefers-color-scheme: dark){
-  :root{ --bg:#111418; --surface:#181c21; --ink:#e8eaed; --muted:#9aa3ad; --line:#2a3038;
-    --accent:#7fb2ea; --accent-ink:#0d1520; --accent-soft:#1a2633; --code-bg:#1b2027; }
-}
+:root{color-scheme:light}
+:root[data-theme="dark"]{--bg:#111418;--surface:#181c21;--ink:#e8eaed;--muted:#9aa3ad;--line:#2a3038;--accent:#7fb2ea;--accent-ink:#0d1520;--accent-soft:#1a2633;--code-bg:#1b2027;--ok-bg:#173323;--ok-ink:#7fd39b;--ok-line:#2f6b45;--bad-bg:#3a1d1a;--bad-ink:#f19a8f;--bad-line:#7a3a32;color-scheme:dark}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111418;--surface:#181c21;--ink:#e8eaed;--muted:#9aa3ad;--line:#2a3038;--accent:#7fb2ea;--accent-ink:#0d1520;--accent-soft:#1a2633;--code-bg:#1b2027;--ok-bg:#173323;--ok-ink:#7fd39b;--ok-line:#2f6b45;--bad-bg:#3a1d1a;--bad-ink:#f19a8f;--bad-line:#7a3a32;color-scheme:dark}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
@@ -15,7 +15,7 @@ a:hover{text-decoration:underline}
 .wrap{max-width:720px;margin:0 auto;padding:0 20px}
 h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:600;line-height:1.2;margin:0}
 
-.top{padding-top:28px;padding-bottom:8px;font-size:.92rem;color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:20px;padding-bottom:8px;font-size:.92rem;color:var(--muted)}
 .top a{color:var(--muted)}
 .top a:hover{color:var(--accent)}
 
@@ -71,13 +71,9 @@ footer.wrap{padding-top:28px;padding-bottom:56px;border-top:1px solid var(--line
 .flow .node > div{font-size:.95rem;line-height:1.55}
 .flow .stuck{border-color:var(--accent)}
 .branch{display:block;width:max-content;max-width:100%;margin-top:7px;padding:2px 10px;border-radius:999px;font-size:.82rem;font-weight:600}
-.branch.ok{background:#e3f4e8;color:#1d6b38}
-.branch.bad{background:#fbe9e7;color:#a3362b}
+.branch.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.branch.bad{background:var(--bad-bg);color:var(--bad-ink)}
 .branch.loop{background:var(--accent-soft);color:var(--accent)}
-@media (prefers-color-scheme: dark){
-  .branch.ok{background:#173323;color:#7fd39b}
-  .branch.bad{background:#3a1d1a;color:#f19a8f}
-}
 
 /* Figure: search tree */
 .tree{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
@@ -86,13 +82,9 @@ footer.wrap{padding-top:28px;padding-bottom:56px;border-top:1px solid var(--line
 .tree .lbls text{font:500 13px Inter,system-ui,sans-serif;fill:var(--muted)}
 .tree .tn{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
 .tree .tn.stuck{stroke:var(--accent)}
-.tree .tn.bad{fill:#fbe9e7;stroke:#e3a59d}
-.tree .tn.ok{fill:#e3f4e8;stroke:#8fcca3}
+.tree .tn.bad{fill:var(--bad-bg);stroke:var(--bad-line)}
+.tree .tn.ok{fill:var(--ok-bg);stroke:var(--ok-line)}
 .tree .nodes text{font:600 14px Inter,system-ui,sans-serif;text-anchor:middle;fill:var(--ink)}
-@media (prefers-color-scheme: dark){
-  .tree .tn.bad{fill:#3a1d1a;stroke:#7a3a32}
-  .tree .tn.ok{fill:#173323;stroke:#2f6b45}
-}
 
 /* Tables */
 .table-wrap{overflow-x:auto;margin:0 0 16px;border:1px solid var(--line);border-radius:12px}
@@ -100,6 +92,5 @@ table{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numeric:t
 th,td{padding:9px 12px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--line)}
 th{font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--surface)}
 tbody tr:last-child td{border-bottom:none}
-td.ok{color:#1d6b38;font-weight:600}
-td.bad{color:#a3362b;font-weight:600}
-@media (prefers-color-scheme: dark){td.ok{color:#7fd39b}td.bad{color:#f19a8f}}
+td.ok{color:var(--ok-ink);font-weight:600}
+td.bad{color:var(--bad-ink);font-weight:600}
