@@ -102,6 +102,7 @@ td.bad{color:var(--bad-ink);font-weight:600}
 .btn.ghost:hover{border-color:var(--accent);color:var(--accent);opacity:1}
 .photo{margin:24px 0 28px;text-align:center}
 .photo img{display:block;width:auto;max-width:100%;height:auto;margin:0 auto;border-radius:14px;border:1px solid var(--line)}
+.photo video{display:block;width:100%;max-width:720px;height:auto;margin:0 auto;border-radius:14px;border:1px solid var(--line);background:#fff}
 .photo figcaption{margin-top:10px;font-size:.88rem;color:var(--muted)}
 .fig.sheet{padding:12px}
 .fig.sheet img{display:block;width:100%;height:auto;border-radius:8px;background:#fff}
